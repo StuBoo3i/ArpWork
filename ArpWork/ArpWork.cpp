@@ -103,5 +103,43 @@ void ArpWork::gethost() {
     //ÊÍ·ÅÄÚ´æ¿Õ¼ä
     if (pIpAdapterInfo) {
         delete pIpAdapterInfo;
+        pIpAdapterInfo = NULL;
+    }
+}
+
+void ArpWork::getIP(){
+    PIP_ADAPTER_INFO pIpAdapterInfo = new IP_ADAPTER_INFO();
+    unsigned long stSize = sizeof(IP_ADAPTER_INFO);
+    int nRel = GetAdaptersInfo(pIpAdapterInfo, &stSize);
+     
+    if (ERROR_BUFFER_OVERFLOW == nRel) {
+        pIpAdapterInfo = (PIP_ADAPTER_INFO)new BYTE[stSize];
+        nRel = GetAdaptersInfo(pIpAdapterInfo, &stSize);
+    }
+    if (ERROR_SUCCESS == nRel) {
+        QString IP;
+        QString number = ui.lineEdit_3->text();
+        int n = number.toInt();
+        
+
+        for (int i = 1; i < n; i++)
+        {
+            pIpAdapterInfo = pIpAdapterInfo->Next;
+        }
+
+        IP_ADDR_STRING* pIpAddrString = &(pIpAdapterInfo->IpAddressList);
+
+        IP += pIpAdapterInfo->Description;
+        IP += "\n";
+
+        do {
+            IP += "IP ";
+            IP += pIpAddrString->IpAddress.String;
+            IP += "\n";
+            pIpAddrString = pIpAddrString->Next;
+
+        } while (pIpAddrString);
+
+        ui.plainTextEdit_4->setPlainText(IP);
     }
 }

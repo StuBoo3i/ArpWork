@@ -17,5 +17,5 @@ private:
 private slots://相应功能槽函数
     void send();
     void gethost();
-
+    void getIP();
 };

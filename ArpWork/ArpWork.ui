@@ -254,8 +254,8 @@
    <slot>send()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>539</x>
-     <y>249</y>
+     <x>580</x>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>540</x>
@@ -270,8 +270,8 @@
    <slot>gethost()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>58</x>
-     <y>249</y>
+     <x>610</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>58</x>
@@ -279,9 +279,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>ArpWorkClass</receiver>
+   <slot>getIP()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>251</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>336</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>send()</slot>
   <slot>gethost()</slot>
+  <slot>getIP()</slot>
  </slots>
 </ui>
