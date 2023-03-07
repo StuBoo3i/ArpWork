@@ -1,13 +1,4 @@
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
-#define _CRT_SECURE_NO_WARNINGS
-
 #include "ArpWork.h"
-#include <WinSock2.h>
-#include <Iphlpapi.h>
-#include <iostream>
-#include <sstream>
-#include <string> 
-#include "pcap.h"
 
 ArpWork::ArpWork(QWidget* parent)
     : QMainWindow(parent)
@@ -19,48 +10,17 @@ ArpWork::~ArpWork()
 {}
 
 using namespace std;
-#pragma comment(lib,"Iphlpapi.lib")
-#pragma comment(lib,"wpcap")
 
-//MAC地址
-struct mac_address {
-    u_char byte[6];
-};
-
-struct eth_head {
-    mac_address destMAC;    	//目的MAC地址 6字节  
-    mac_address sourceMAC;      //源MAC地址 6字节  
-    u_short     type;           //帧类型, 0x0806是ARP帧的类型值
-};
-
-struct arp_head
-{
-    unsigned short  hardwareType;       //硬件类型
-    unsigned short  protocolType;       //协议类型
-    unsigned char   hardwareAddLen;     //硬件地址长度
-    unsigned char   protocolAddLen;     //协议地址长度
-    unsigned short  op;                 //op，操作类型
-    mac_address     sourceMAC;          //发送方MAC地址
-    unsigned long   sourceIP;           //发送方IP地址
-    mac_address     destMAC;            //目的MAC地址
-    unsigned long   destIP;             //目的IP地址
-};
-
-struct arp_packet
-{
-    eth_head apt_eth_head;
-    arp_head apt_arp_head;
-};
 
 int Gate(pcap_t* adhandle , string TargetHostIP, string GateIP, u_char TargetHostMAC[6], u_char HostMAC[6])
 {
     //伪造ARP Relpy包
     //目标信息
-    string DstIP = "192.168.249.131";
-    u_char DstMAC[6] = { 0x00,0x0C,0x29,0xDE,0x4F,0x78 };
+    string DstIP = TargetHostIP;
+    u_char DstMAC[6] = { 0,0,0,0,0,0 }; //TargetHostMAC;
     //源信息
-    string SrcIP = "192.168.249.2";
-    u_char SrcMAC[6] = { 0x00,0x50,0x56,0xC0,0x00,0x08 };   //假MAC地址（攻击机MAC）
+    string SrcIP = GateIP;
+    u_char SrcMAC[6] = { 0,0,0,0,0,0 }; //HostMAC;   //假MAC地址（攻击机MAC）
 
     eth_head eh;        //以太网头
     arp_head ah;        //ARP头
@@ -103,11 +63,11 @@ int Host(pcap_t* adhandle, string TargetHostIP, string GateIP, u_char HostMAC[6]
 {
     //伪造ARP Relpy包
     //目标信息
-    string DstIP = "192.168.249.2";
-    u_char DstMAC[6] = { 0x00,0x0C,0x29,0xDE,0x4F,0x78 };
+    string DstIP = GateIP;
+    u_char DstMAC[6] = { 0,0,0,0,0,0 }; //GateMAC[6];
     //源信息
-    string SrcIP = "192.168.249.131";
-    u_char SrcMAC[6] = { 0x00,0x50,0x56,0xC0,0x00,0x08 };   //假MAC地址（攻击机MAC）
+    string SrcIP = TargetHostIP;
+    u_char SrcMAC[6] = { 0,0,0,0,0,0 }; //HostMAC[6];   //假MAC地址（攻击机MAC）
 
     eth_head eh;        //以太网头
     arp_head ah;        //ARP头
@@ -148,7 +108,7 @@ int Host(pcap_t* adhandle, string TargetHostIP, string GateIP, u_char HostMAC[6]
 
 void ArpWork::send()
 {
-    pcap_if_t* alldevs;
+    /*pcap_if_t* alldevs;
     pcap_if_t* d;
     char* tam = (char*)"rpcap://";
     char errbuf[PCAP_ERRBUF_SIZE];
@@ -180,6 +140,7 @@ void ArpWork::send()
             return ;
         }
         for (d = alldevs, i = 0; i < n+1; d = d->next, i++);
+        break;
     }
 
     //打开与网络适配器绑定的设备
@@ -190,8 +151,8 @@ void ArpWork::send()
         pcap_freealldevs(alldevs);
         return;
     }
-    pcap_freealldevs(alldevs);
-
+    pcap_freealldevs(alldevs);*/
+    ui.lineEdit->setText("1008611");
     //发送模式
    // Gate(adhandle);
    // Host(adhandle);
@@ -313,4 +274,10 @@ void ArpWork::getIP(){
 
         ui.plainTextEdit_4->setPlainText(IP);
     }
+}
+
+void ArpWork::stop()
+{
+    ui.lineEdit_5->setText("##");
+    ui.lineEdit_3->setText("100221");
 }

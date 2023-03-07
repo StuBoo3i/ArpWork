@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>730</width>
-    <height>453</height>
+    <width>759</width>
+    <height>505</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>40</x>
       <y>0</y>
       <width>91</width>
       <height>41</height>
@@ -30,8 +30,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>30</y>
+      <x>40</x>
+      <y>60</y>
       <width>361</width>
       <height>141</height>
      </rect>
@@ -40,8 +40,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>30</y>
+      <x>400</x>
+      <y>60</y>
       <width>161</width>
       <height>141</height>
      </rect>
@@ -50,7 +50,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>340</x>
       <y>300</y>
       <width>54</width>
       <height>16</height>
@@ -63,7 +63,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>340</x>
       <y>340</y>
       <width>54</width>
       <height>16</height>
@@ -76,8 +76,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>200</y>
+      <x>40</x>
+      <y>230</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -89,7 +89,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>340</x>
       <y>260</y>
       <width>54</width>
       <height>16</height>
@@ -102,7 +102,7 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>420</x>
       <y>300</y>
       <width>131</width>
       <height>23</height>
@@ -112,7 +112,7 @@
    <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>420</x>
       <y>340</y>
       <width>131</width>
       <height>23</height>
@@ -122,8 +122,8 @@
    <widget class="QLineEdit" name="lineEdit_3">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>200</y>
+      <x>70</x>
+      <y>230</y>
       <width>131</width>
       <height>23</height>
      </rect>
@@ -132,8 +132,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>200</y>
+      <x>630</x>
+      <y>230</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -145,8 +145,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>200</y>
+      <x>220</x>
+      <y>230</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -158,8 +158,8 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>300</y>
+      <x>600</x>
+      <y>330</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -171,8 +171,8 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>340</y>
+      <x>600</x>
+      <y>370</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -184,7 +184,7 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>420</x>
       <y>260</y>
       <width>131</width>
       <height>24</height>
@@ -204,8 +204,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit_3">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>30</y>
+      <x>560</x>
+      <y>60</y>
       <width>161</width>
       <height>141</height>
      </rect>
@@ -214,21 +214,44 @@
    <widget class="QPlainTextEdit" name="plainTextEdit_4">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>240</y>
+      <x>60</x>
+      <y>270</y>
       <width>231</width>
       <height>141</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_5">
+   <widget class="QLineEdit" name="lineEdit_4">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>300</y>
+      <x>700</x>
+      <y>330</y>
       <width>21</width>
       <height>21</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_5">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>380</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>380</y>
+      <width>54</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>目标MAC</string>
     </property>
    </widget>
   </widget>
@@ -237,7 +260,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>730</width>
+     <width>759</width>
      <height>21</height>
     </rect>
    </property>
@@ -258,34 +281,18 @@
  </resources>
  <connections>
   <connection>
-   <sender>pushButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>ArpWorkClass</receiver>
-   <slot>send()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>580</x>
-     <y>318</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>540</x>
-     <y>271</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>ArpWorkClass</receiver>
    <slot>gethost()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>610</x>
-     <y>261</y>
+     <x>670</x>
+     <y>281</y>
     </hint>
     <hint type="destinationlabel">
-     <x>58</x>
-     <y>277</y>
+     <x>669</x>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -296,12 +303,44 @@
    <slot>getIP()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>256</x>
-     <y>251</y>
+     <x>270</x>
+     <y>278</y>
     </hint>
     <hint type="destinationlabel">
-     <x>336</x>
-     <y>244</y>
+     <x>335</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>ArpWorkClass</receiver>
+   <slot>send()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>649</x>
+     <y>380</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>575</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>ArpWorkClass</receiver>
+   <slot>stop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>642</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>642</x>
+     <y>449</y>
     </hint>
    </hints>
   </connection>
@@ -310,5 +349,6 @@
   <slot>send()</slot>
   <slot>gethost()</slot>
   <slot>getIP()</slot>
+  <slot>stop()</slot>
  </slots>
 </ui>

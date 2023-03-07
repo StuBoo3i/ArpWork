@@ -29,9 +29,6 @@
     <QtUic Include="ArpWork.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtMoc Include="ArpWork.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <ClCompile Include="ArpWork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -40,5 +37,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ArpWork.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>
