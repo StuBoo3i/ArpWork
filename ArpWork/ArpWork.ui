@@ -158,27 +158,14 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>330</y>
+      <x>630</x>
+      <y>380</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
      <string>发送</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>600</x>
-      <y>370</y>
-      <width>80</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>停止</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBox">
@@ -218,16 +205,6 @@
       <y>270</y>
       <width>231</width>
       <height>141</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
-    <property name="geometry">
-     <rect>
-      <x>700</x>
-      <y>330</y>
-      <width>21</width>
-      <height>21</height>
      </rect>
     </property>
    </widget>
@@ -309,38 +286,6 @@
     <hint type="destinationlabel">
      <x>335</x>
      <y>280</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>ArpWorkClass</receiver>
-   <slot>send()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>649</x>
-     <y>380</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>575</x>
-     <y>378</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>ArpWorkClass</receiver>
-   <slot>stop()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>642</x>
-     <y>419</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>642</x>
-     <y>449</y>
     </hint>
    </hints>
   </connection>

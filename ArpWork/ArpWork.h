@@ -23,7 +23,7 @@ struct eth_head {
     mac_address sourceMAC;      //源MAC地址 6字节  
     u_short     type;           //帧类型, 0x0806是ARP帧的类型值
 };
-
+#pragma pack(1)
 struct arp_head
 {
     unsigned short  hardwareType;       //硬件类型
@@ -36,6 +36,7 @@ struct arp_head
     mac_address     destMAC;            //目的MAC地址
     unsigned long   destIP;             //目的IP地址
 };
+
 
 struct arp_packet
 {
@@ -51,8 +52,11 @@ public:
     ArpWork(QWidget *parent = nullptr);
     ~ArpWork();
 
+    
+
 private:
     Ui::ArpWorkClass ui;
+    QTimer* timer;
 
 private slots://相应功能槽函数
     void send();

