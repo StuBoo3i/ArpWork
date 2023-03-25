@@ -191,7 +191,6 @@ void ArpWork::send()
     string GateIP = ui.lineEdit_2->text().toStdString();   
 
     pcap_freealldevs(alldevs);
-    ui.lineEdit->setText("1008611");
 
     //·¢ËÍÄ£Ê½
     QString str1 = "Gate";
@@ -314,10 +313,7 @@ void ArpWork::gethost() {
 
             ui.plainTextEdit_3->setPlainText(NetIP);
 
-            //do {
-            //    cout << "IP £º" << pIpAddrString->IpAddress.String << endl;
-           //     pIpAddrString = pIpAddrString->Next;
-           // } while (pIpAddrString);
+            
 
             pIpAdapterInfo = pIpAdapterInfo->Next;
         }
@@ -354,18 +350,13 @@ void ArpWork::getIP(){
         IP += pIpAdapterInfo->Description;
         IP += "\n";
 
-        do {
-            IP += "IP ";
-            IP += pIpAddrString->IpAddress.String;
-            IP += "\n";
-            pIpAddrString = pIpAddrString->Next;
+         IP += "IP ";
+         IP += pIpAddrString->IpAddress.String;
+         IP += "\n";
+         pIpAddrString = pIpAddrString->Next;
 
-        } while (pIpAddrString);
+        
 
         ui.plainTextEdit_4->setPlainText(IP);
     }
-}
-
-void ArpWork::stop() {
-    flag = 0;
 }
